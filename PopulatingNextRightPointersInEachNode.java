@@ -21,18 +21,17 @@ class Node {
 };
 */
 
-class PopulatingNextRightPointersInEachNode {
+class Solution {
+    public void connectHelper(Node root){
+        if(root == null) return;
+        if(root.left != null) root.left.next = root.right;
+        if(root.right != null) root.right.next = (root.next == null) ? null: root.next.left;
+        connectHelper(root.left);
+        connectHelper(root.right);
+
+    }
     public Node connect(Node root) {
-        Node level_start=root;
-        while(level_start!=null){
-            Node cur=level_start;
-            while(cur!=null){
-                if(cur.left!=null) cur.left.next=cur.right;
-                if(cur.right!=null && cur.next!=null) cur.right.next=cur.next.left;
-                
-                cur=cur.next;
-            }
-            level_start=level_start.left;
-        }
+        connectHelper(root);
+        return root;
     }
 }
